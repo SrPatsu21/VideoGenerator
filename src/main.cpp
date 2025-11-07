@@ -99,12 +99,12 @@ int main() {
     uint32_t computeQueueFamily = findComputeQueueFamily(physicalDevice);
 
     // Create the command pool
-    VkCommandPoolCreateInfo poolInfo{ VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO };
-    poolInfo.queueFamilyIndex = computeQueueFamily;
-    poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+    VkCommandPoolCreateInfo cmdPoolInfo{ VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO };
+    cmdPoolInfo.queueFamilyIndex = computeQueueFamily;
+    cmdPoolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
     VkCommandPool commandPool;
-    if (vkCreateCommandPool(device, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) {
+    if (vkCreateCommandPool(device, &cmdPoolInfo, nullptr, &commandPool) != VK_SUCCESS) {
         throw std::runtime_error("Failed to create command pool!");
     }
 
@@ -153,17 +153,21 @@ int main() {
 
     // 5) Allocate descriptor set and update it with storage image view
     // (Assume a descriptor pool exists; create one if needed.)
-    VkDescriptorPool descriptorPool = VK_NULL_HANDLE; // <--- fill/create with storage image support
     // For brevity: create a very simple pool capable of 1 storage image descriptor here:
     VkDescriptorPoolSize poolSize{};
     poolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
     poolSize.descriptorCount = 1;
-    VkDescriptorPoolCreateInfo poolInfo{};
-    poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-    poolInfo.maxSets = 1;
-    poolInfo.poolSizeCount = 1;
-    poolInfo.pPoolSizes = &poolSize;
-    vkCreateDescriptorPool(device, &poolInfo, nullptr, &descriptorPool);
+
+    VkDescriptorPoolCreateInfo descPoolInfo{};
+    descPoolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+    descPoolInfo.poolSizeCount = 1;
+    descPoolInfo.pPoolSizes = &poolSize;
+    descPoolInfo.maxSets = 1;
+
+    VkDescriptorPool descriptorPool = VK_NULL_HANDLE; // <--- fill/create with storage image support
+    if (vkCreateDescriptorPool(device, &descPoolInfo, nullptr, &descriptorPool) != VK_SUCCESS) {
+        throw std::runtime_error("Failed to create descriptor pool!");
+    }
 
     VkDescriptorSetAllocateInfo allocInfo{};
     allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -220,7 +224,7 @@ int main() {
         // For demonstration, let's save an image once (or on user action)
         static bool saved = false;
         if (!saved) {
-            copyImageToBufferAndSave(device, physicalDevice, graphicsQueue, cmdPool, storageImage, IMG_W, IMG_H, "output.png");
+            copyImageToBufferAndSave(device, physicalDevice, computeQueue, commandPool, storageImage, IMG_W, IMG_H, "out.png");
             std::cout << "Saved output.png\n";
             saved = true;
         }
