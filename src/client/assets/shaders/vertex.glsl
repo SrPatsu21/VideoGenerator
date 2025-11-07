@@ -1,18 +1,11 @@
 #version 450
-
-layout(location = 0) in vec3 inPosition;
-layout(location = 1) in vec4 inColor;
-
-layout(location = 0) out vec4 fragColor;
-
-// Uniform Buffer Object
-layout(set = 0, binding = 0) uniform UBO {
-    mat4 model;
-    mat4 view;
-    mat4 proj;
-} ubo;
-
+layout(location = 0) out vec2 uv;
+vec2 positions[3] = vec2[](
+    vec2(-1.0, -1.0),
+    vec2( 3.0, -1.0),
+    vec2(-1.0,  3.0)
+);
 void main() {
-    fragColor = inColor;
-    gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 1.0);
+    gl_Position = vec4(positions[gl_VertexIndex], 0.0, 1.0);
+    uv = (gl_Position.xy * 0.5) + 0.5;
 }

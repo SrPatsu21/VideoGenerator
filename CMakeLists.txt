@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(ProjectD)
+project(VideoGenerator)
 
 # Set C++ standard
     set(CMAKE_CXX_STANDARD 17)
@@ -126,6 +126,7 @@ include_directories(lib/assimp/include)
     set(SHADERS
         vertex.glsl
         fragment.glsl
+        compute.glsl
     )
 
     set(SHADER_OUTPUTS "")
@@ -135,10 +136,12 @@ include_directories(lib/assimp/include)
         set(SPV_FILE ${COMPILED_SHADER_DIR}/${SHADER_NAME}.spv)
 
         # Detect stage based on filename
-        if(SHADER_NAME MATCHES "vertex.glsl")
+        if(SHADER_NAME MATCHES "vertex\\.glsl$")
             set(STAGE "vert")
-        elseif(SHADER_NAME MATCHES "fragment.glsl")
+        elseif(SHADER_NAME MATCHES "fragment\\.glsl$")
             set(STAGE "frag")
+        elseif(SHADER_NAME MATCHES "compute\\.glsl$")
+            set(STAGE "comp")
         else()
             message(FATAL_ERROR "Unknown shader stage for ${SHADER_NAME}")
         endif()
@@ -153,6 +156,9 @@ include_directories(lib/assimp/include)
 
         list(APPEND SHADER_OUTPUTS ${SPV_FILE})
     endforeach()
+
+# optional convenience target to build all shaders manually
+add_custom_target(compile_shaders ALL DEPENDS ${SHADER_OUTPUTS})
 
 add_custom_target(Shaders ALL DEPENDS ${SHADER_OUTPUTS})
 
@@ -170,21 +176,21 @@ add_custom_target(Shaders ALL DEPENDS ${SHADER_OUTPUTS})
     file(GLOB_RECURSE SOURCES src/*.cpp)
 
 # Create the executable
-    add_executable(ProjectD ${SOURCES} ${IMGUI_SOURCES} ${STB_SOURCES})
-    add_dependencies(ProjectD Shaders)
+    add_executable(VideoGenerator ${SOURCES} ${IMGUI_SOURCES} ${STB_SOURCES})
+    add_dependencies(VideoGenerator Shaders)
 
     if(WIN32)
         set_target_properties(
-            ProjectD
+            VideoGenerator
             PROPERTIES
-                OUTPUT_NAME "ProjectD"
+                OUTPUT_NAME "VideoGenerator"
                 SUFFIX ".exe"
         )
     elseif(UNIX)
         set_target_properties(
-            ProjectD
+            VideoGenerator
             PROPERTIES
-                OUTPUT_NAME "ProjectD"
+                OUTPUT_NAME "VideoGenerator"
                 SUFFIX ".out"
         )
 
@@ -196,7 +202,7 @@ add_custom_target(Shaders ALL DEPENDS ${SHADER_OUTPUTS})
 
         file(COPY ${LIBS_DIR}/libdecor DESTINATION ${CMAKE_BINARY_DIR}/lib/linux)
 
-        set_target_properties(ProjectD PROPERTIES
+        set_target_properties(VideoGenerator PROPERTIES
             INSTALL_RPATH "$ORIGIN/lib/linux"
             BUILD_WITH_INSTALL_RPATH TRUE
         )
@@ -206,8 +212,8 @@ add_custom_target(Shaders ALL DEPENDS ${SHADER_OUTPUTS})
 # Link libraries
 if(WIN32)
     # Link against the Vulkan loader library
-    target_link_libraries(ProjectD vulkan-1 -static-libgcc -static-libstdc++)
+    target_link_libraries(VideoGenerator vulkan-1 -static-libgcc -static-libstdc++)
 endif()
 
-target_link_libraries(ProjectD glfw)
-target_link_libraries(ProjectD ${LIBRARIES})
+target_link_libraries(VideoGenerator glfw)
+target_link_libraries(VideoGenerator ${LIBRARIES})
