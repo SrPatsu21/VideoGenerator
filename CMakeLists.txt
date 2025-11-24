@@ -61,6 +61,22 @@ endif()
     # add_subdirectory(${GLFW_DIR} binary_dir EXCLUDE_FROM_ALL)
     include_directories(lib/glfw/include)
 
+# ONNX Runtime
+set(ONNXRUNTIME_DIR "${CMAKE_SOURCE_DIR}/external/onnxruntime")
+
+include_directories(${ONNXRUNTIME_DIR}/include)
+link_directories(${ONNXRUNTIME_DIR}/lib)
+
+target_link_libraries(VideoGenerator
+    onnxruntime
+)
+
+# Tokenizers (assumindo instalação local)
+find_path(TOKENIZERS_INCLUDE_DIR tokenizers/tokenizer.h)
+include_directories(${TOKENIZERS_INCLUDE_DIR})
+target_link_libraries(VideoGenerator tokenizers) # ajuste conforme o nome da lib
+
+
 #* Dear ImGui setup
     set(IMGUI_DIR lib/Dear-ImGui)
     include_directories(${IMGUI_DIR} ${IMGUI_DIR}/backends ..)
@@ -126,7 +142,6 @@ include_directories(lib/assimp/include)
     set(SHADERS
         vertex.glsl
         fragment.glsl
-        compute.glsl
     )
 
     set(SHADER_OUTPUTS "")
@@ -136,12 +151,10 @@ include_directories(lib/assimp/include)
         set(SPV_FILE ${COMPILED_SHADER_DIR}/${SHADER_NAME}.spv)
 
         # Detect stage based on filename
-        if(SHADER_NAME MATCHES "vertex\\.glsl$")
+        if(SHADER_NAME MATCHES "vertex.glsl")
             set(STAGE "vert")
-        elseif(SHADER_NAME MATCHES "fragment\\.glsl$")
+        elseif(SHADER_NAME MATCHES "fragment.glsl")
             set(STAGE "frag")
-        elseif(SHADER_NAME MATCHES "compute\\.glsl$")
-            set(STAGE "comp")
         else()
             message(FATAL_ERROR "Unknown shader stage for ${SHADER_NAME}")
         endif()
@@ -156,9 +169,6 @@ include_directories(lib/assimp/include)
 
         list(APPEND SHADER_OUTPUTS ${SPV_FILE})
     endforeach()
-
-# optional convenience target to build all shaders manually
-add_custom_target(compile_shaders ALL DEPENDS ${SHADER_OUTPUTS})
 
 add_custom_target(Shaders ALL DEPENDS ${SHADER_OUTPUTS})
 
