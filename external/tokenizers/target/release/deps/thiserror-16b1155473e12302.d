@@ -1,0 +1,14 @@
+/home/srpatsu21/code/VideoGenerator/external/tokenizers/target/release/deps/thiserror-16b1155473e12302.d: /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/srpatsu21/code/VideoGenerator/external/tokenizers/target/release/build/thiserror-17ecf9c0462e2ce9/out/private.rs
+
+/home/srpatsu21/code/VideoGenerator/external/tokenizers/target/release/deps/libthiserror-16b1155473e12302.rlib: /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/srpatsu21/code/VideoGenerator/external/tokenizers/target/release/build/thiserror-17ecf9c0462e2ce9/out/private.rs
+
+/home/srpatsu21/code/VideoGenerator/external/tokenizers/target/release/deps/libthiserror-16b1155473e12302.rmeta: /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/srpatsu21/code/VideoGenerator/external/tokenizers/target/release/build/thiserror-17ecf9c0462e2ce9/out/private.rs
+
+/home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs:
+/home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs:
+/home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs:
+/home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs:
+/home/srpatsu21/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs:
+/home/srpatsu21/code/VideoGenerator/external/tokenizers/target/release/build/thiserror-17ecf9c0462e2ce9/out/private.rs:
+
+# env-dep:OUT_DIR=/home/srpatsu21/code/VideoGenerator/external/tokenizers/target/release/build/thiserror-17ecf9c0462e2ce9/out

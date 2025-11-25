@@ -13,31 +13,22 @@ description = """
 Provides an implementation of today's most used tokenizers,
 with a focus on performances and versatility.
 """
-exclude = [ "rust-toolchain", "target/*", "Cargo.lock", "benches/*.txt", "benches/*.json", "data/*" ]
+exclude = [
+    "rust-toolchain",
+    "target/*",
+    "Cargo.lock",
+    "benches/*.txt",
+    "benches/*.json",
+    "data/*"
+]
 
 [lib]
 name = "tokenizers"
 crate-type = ["cdylib"]
 
-[[bench]]
-name = "bpe_benchmark"
-harness = false
-
-[[bench]]
-name = "bert_benchmark"
-harness = false
-
-[[bench]]
-name = "layout_benchmark"
-harness = false
-
-[[bench]]
-name = "unigram_benchmark"
-harness = false
-
-[[bench]]
-name = "llama3_benchmark"
-harness = false
+# REMOVIDO:
+# [[bench]]
+# [[example]]
 
 [dependencies]
 rand = "0.9"
@@ -86,8 +77,3 @@ tracing-subscriber = "0.3.18"
 
 [profile.release]
 lto = "fat"
-
-[[example]]
-name = "encode_batch"
-required-features = ["http"]
-
