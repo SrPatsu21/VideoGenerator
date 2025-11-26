@@ -8,6 +8,9 @@ project(VideoGenerator)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DVK_PROTOTYPES")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVK_PROTOTYPES -static-libgcc -static-libstdc++")
 
+    add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
+    add_link_options(-fsanitize=address)
+
     if(WIN32)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,--whole-archive -lpthread -Wl,--no-whole-archive")
     endif()
@@ -67,16 +70,6 @@ set(ONNXRUNTIME_DIR "${CMAKE_SOURCE_DIR}/external/onnxruntime")
 include_directories(${ONNXRUNTIME_DIR}/include)
 link_directories(${ONNXRUNTIME_DIR}/lib)
 
-target_link_libraries(VideoGenerator
-    onnxruntime
-)
-
-# Tokenizers (assumindo instalação local)
-find_path(TOKENIZERS_INCLUDE_DIR tokenizers/tokenizer.h)
-include_directories(${TOKENIZERS_INCLUDE_DIR})
-target_link_libraries(VideoGenerator tokenizers) # ajuste conforme o nome da lib
-
-
 #* Dear ImGui setup
     set(IMGUI_DIR lib/Dear-ImGui)
     include_directories(${IMGUI_DIR} ${IMGUI_DIR}/backends ..)
@@ -128,6 +121,8 @@ set(SHADERS
 set(STB_DIR ${CMAKE_SOURCE_DIR}/lib/stb)
 include_directories(${STB_DIR})
 set(STB_SOURCES src/client/image/stb_image_impl.cpp)
+
+
 
 # assimp
 add_subdirectory(lib/assimp)
@@ -227,3 +222,4 @@ endif()
 
 target_link_libraries(VideoGenerator glfw)
 target_link_libraries(VideoGenerator ${LIBRARIES})
+target_link_libraries(VideoGenerator onnxruntime)

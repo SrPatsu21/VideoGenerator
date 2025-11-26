@@ -13,7 +13,8 @@ services:
 
             - ./CMakeLists.txt:/workspace/CMakeLists.txt
             - ./toolchain-mingw.cmake:/workspace/toolchain-mingw.cmake
-            - lib-data:/workspace/lib
+            - ./external:/workspace/external
+            - ./lib:/workspace/lib
 
 
             - ./src:/workspace/src
